@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STELLA BOT</title>
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('chat.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00d4ff;
+            margin: 20px 0;
+            text-shadow: 0 4px 10px rgba(0, 212, 255, 0.7);
+        }
+
+        /* Caixa do Sinal */
+        .signal-box {
+            background: linear-gradient(145deg, #1f4068, #162447);
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .signal-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .signal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff8c00;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .signal-details {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #d3d3d3;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #00ffab;
+        }
+
+        .timestamp {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        img {
+            width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Botão de Aposta */
+        .bet-button {
+            background: linear-gradient(90deg, #ff8c00, #ff3f81);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .bet-button:hover {
+            background: linear-gradient(90deg, #ff3f81, #ff8c00);
+            transform: scale(1.05);
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .signal-details {
+                font-size: 0.9rem;
+            }
+
+            .bet-button {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>STELLA BOT - Sinais Aviator</h1>
+    <div id="signal-container"></div>
+
+    <script>
+        // Retorna o horário atual formatado
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Gera um número aleatório entre 2 e 4
+        function getRandomMultiplier() {
+            return Math.floor(Math.random() * 3) + 2; // Gera números inteiros entre 2 e 4
+        }
+
+        // Gera o conteúdo de um novo sinal
+        function generateSignal() {
+            const container = document.getElementById("signal-container");
+            const currentTime = getCurrentTime();
+            const randomMultiplier = getRandomMultiplier(); // Sorteia o multiplicador
+
+            const signalBox = document.createElement("div");
+            signalBox.classList.add("signal-box");
+
+            signalBox.innerHTML = `
+                <div class="timestamp">${currentTime}</div>
+                <img src="stella.png" alt="Imagem do Sinal">
+                <div class="signal-title">🚀 ENTRADA CONFIRMADA 🚀</div>
+                <div class="signal-details">
+                    🌐 Site web: <span class="highlight">aviator-clica aqui</span><br>
+                    👉 Apostar agora<br>
+                    💰 Sair até: <span class="highlight">${randomMultiplier}X</span><br>
+                    🔰 Proteção 1.30X a 1.80X<br>
+                    ⚠️ Realize até <span class="highlight">2 tentativas</span>
+                </div>
+                <button class="bet-button" onclick="goToIndex()">Registre-se aqui!</button>
+            `;
+
+            container.prepend(signalBox);
+
+            // Mantém apenas os últimos 5 sinais visíveis
+            if (container.children.length > 5) {
+                container.removeChild(container.lastChild);
+            }
+        }
+
+        // Redireciona para a página inicial
+        function goToIndex() {
+            window.location.href = 'index.html';
+        }
+
+        // Gera um novo sinal a cada minuto (60 segundos)
+        setInterval(generateSignal, 50000);
+
+        // Gera o primeiro sinal imediatamente
+        generateSignal();
+    </script>
+</body>
+</html>
